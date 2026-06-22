@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VeloRecord Studio - Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+  <div class="app-layout">
+    <!-- Sidebar / Library -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="logo">
+          <svg viewBox="0 0 24 24" width="28" height="28">
+            <defs>
+              <linearGradient id="db-logo-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#FF2E93" />
+                <stop offset="100%" stop-color="#FF8A00" />
+              </linearGradient>
+            </defs>
+            <circle cx="12" cy="12" r="10" fill="url(#db-logo-grad)" />
+            <polygon points="10,8 16,12 10,16" fill="#FFF" />
+          </svg>
+          <span class="logo-text">VeloRecord <span class="badge">Studio</span></span>
+        </div>
+      </div>
+      <div class="library-section">
+        <h3 class="sidebar-title">Your Recordings</h3>
+        <div class="library-list" id="library-list">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Workspace -->
+    <main class="workspace">
+      <!-- Top navbar for video details -->
+      <header class="workspace-header">
+        <div class="title-editor">
+          <input type="text" id="video-title-input" value="Loading recording..." />
+          <button class="save-title-btn" id="save-title-btn">Rename</button>
+        </div>
+        <div class="action-buttons">
+          <button class="btn btn-secondary" id="download-btn">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            Download WebM
+          </button>
+          <button class="btn btn-danger" id="delete-btn">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+            Delete
+          </button>
+        </div>
+      </header>
+
+      <div class="workspace-grid">
+        <!-- Video and Editing Area -->
+        <div class="video-container">
+          <div class="video-wrapper">
+            <video id="main-video-player" controls></video>
+          </div>
+
+          <!-- Video Editing/Trimming Widget -->
+          <div class="trim-card">
+            <div class="trim-header">
+              <h4 class="trim-title">Trim Video Segment</h4>
+              <div class="trim-times">
+                <span>Start: <strong id="trim-start-label">0:00</strong></span>
+                <span>End: <strong id="trim-end-label">0:00</strong></span>
+              </div>
+            </div>
+
+            <!-- Premium Enterprise Timeline Trimmer -->
+            <div class="timeline-editor-container">
+              <div class="timeline-ticks" id="timeline-ticks"></div>
+              <div class="trim-timeline" id="trim-timeline">
+                <div class="timeline-selection" id="timeline-selection"></div>
+                <div class="timeline-handle handle-start" id="handle-start">
+                  <div class="handle-line"></div>
+                  <div class="handle-tab">
+                    <svg viewBox="0 0 24 24" width="8" height="8" fill="none" stroke="currentColor" stroke-width="3"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                  </div>
+                </div>
+                <div class="timeline-handle handle-end" id="handle-end">
+                  <div class="handle-line"></div>
+                  <div class="handle-tab">
+                    <svg viewBox="0 0 24 24" width="8" height="8" fill="none" stroke="currentColor" stroke-width="3"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                  </div>
+                </div>
+                <div class="playback-head" id="playback-head"></div>
+              </div>
+            </div>
+
+            <div class="trim-actions">
+              <button class="btn btn-primary" id="apply-trim-btn">
+                Apply Edit & Save
+              </button>
+              <div class="trim-status" id="trim-status"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- AI insights / Chapters Panel -->
+        <div class="insights-panel">
+          <div class="tabs-header">
+            <button class="tab-btn" id="tab-transcript-btn">Transcript</button>
+          </div>
+
+          <!-- Transcript Tab (hidden by default) -->
+          <div class="tab-content" id="tab-transcript-content" style="display: none;">
+            <div class="transcript-search-wrap">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transcript-search-icon">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <input type="text" id="transcript-search" placeholder="Search transcript & jump to word...">
+              <span class="transcript-match-count" id="transcript-match-count"></span>
+            </div>
+            <div class="transcript-list" id="transcript-lines"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script src="webm-duration-fix.js"></script>
+  <script src="dashboard.js"></script>
+</body>
+</html>
