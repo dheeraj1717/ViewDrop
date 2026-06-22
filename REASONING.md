@@ -1,6 +1,6 @@
-# VeloRecord Pro - Document of Reasoning
+# ViewDrop Pro - Document of Reasoning
 
-This document outlines the architectural patterns, UX decisions, and technical choices implemented for **VeloRecord Pro** (Loom-like Chrome Extension).
+This document outlines the architectural patterns, UX decisions, and technical choices implemented for **ViewDrop Pro** (Loom-like Chrome Extension).
 
 ---
 
@@ -57,7 +57,7 @@ To stand out, we avoided generic styles and focused on a sleek, dark creative su
 ---
 
 ## 4. Verification & Installation
-1. Unzip the `VeloRecord-Extension.zip` package.
+1. Unzip the `ViewDrop-Extension.zip` package.
 2. Go to `chrome://extensions/` in Chrome.
 3. Toggle **Developer mode** in the top-right.
 4. Click **Load unpacked** and select the unzipped directory.

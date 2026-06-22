@@ -1,16 +1,16 @@
-# 🎥 VeloRecord Pro
+# 🎥 ViewDrop Pro
 
-![VeloRecord Pro](https://img.shields.io/badge/Chrome_Extension-Premium-FF2E93?style=for-the-badge&logo=google-chrome&logoColor=white)
+![ViewDrop Pro](https://img.shields.io/badge/Chrome_Extension-Premium-FF2E93?style=for-the-badge&logo=google-chrome&logoColor=white)
 
-VeloRecord Pro is a state-of-the-art, Loom-style screen, webcam, and audio recording Chrome Extension. Designed with a sleek, glassmorphism aesthetic, it empowers users to effortlessly capture presentations, create tutorials, and communicate asynchronously with high-fidelity video tools directly in the browser.
+ViewDrop Pro is a state-of-the-art, Loom-style screen, webcam, and audio recording Chrome Extension. Designed with a sleek, glassmorphism aesthetic, it empowers users to effortlessly capture presentations, create tutorials, and communicate asynchronously with high-fidelity video tools directly in the browser.
 
 ---
 
 ## 🚀 The Core Idea
 
-The goal of VeloRecord is to bring premium, desktop-class video recording and editing directly into the browser without requiring heavy installations or expensive SaaS subscriptions. 
+The goal of ViewDrop is to bring premium, desktop-class video recording and editing directly into the browser without requiring heavy installations or expensive SaaS subscriptions. 
 
-By utilizing modern Web APIs (like `MediaRecorder`, `AudioContext`, and `SpeechRecognition`) and Chrome's Manifest V3 architecture, VeloRecord offers an instant, zero-latency recording experience where users maintain full ownership and privacy over their data.
+By utilizing modern Web APIs (like `MediaRecorder`, `AudioContext`, and `SpeechRecognition`) and Chrome's Manifest V3 architecture, ViewDrop offers an instant, zero-latency recording experience where users maintain full ownership and privacy over their data.
 
 ### ✨ Key Features
 - **High-fidelity Recording**: Capture your screen, specific tabs, or just your webcam up to 1080p 60fps.
@@ -47,7 +47,7 @@ Building a complex video suite inside a browser extension involves careful archi
 
 ## 🔮 Future Enhancements (What we can add next!)
 
-VeloRecord has a rock-solid foundation, but there is immense room for expansion. Here is a roadmap of what could be built next:
+ViewDrop has a rock-solid foundation, but there is immense room for expansion. Here is a roadmap of what could be built next:
 
 1. **Cloud Sync & One-Click Sharing**
    - Integrate Firebase or AWS S3. Automatically upload the `.webm` file in chunks while recording so a shareable link is generated the second the user clicks "Stop".

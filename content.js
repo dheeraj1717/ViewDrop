@@ -1,4 +1,4 @@
-// VeloRecord Content Script
+// ViewDrop Content Script
 
 (function() {
   // Prevent duplicate injections
@@ -37,7 +37,7 @@
     }
     if (message.action === 'pause_toolbar_ui') {
       isPaused = true;
-      const pauseBtn = document.getElementById('velo-btn-pause');
+      const pauseBtn = document.getElementById('view-btn-pause');
       if (pauseBtn) {
         pauseBtn.innerHTML = `
           <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
@@ -78,7 +78,7 @@
   // --- TIMER ---
   function startTimer() {
     clearInterval(timerInterval);
-    const timerText = document.getElementById('velo-timer-text');
+    const timerText = document.getElementById('view-timer-text');
     timerInterval = setInterval(() => {
       if (!isPaused) {
         secondsElapsed++;
@@ -93,48 +93,48 @@
 
   // --- FLOATING TOOLBAR ---
   function createToolbar(options) {
-    if (document.getElementById('velorecord-toolbar-container')) return;
+    if (document.getElementById('viewdrop-toolbar-container')) return;
 
     toolbarEl = document.createElement('div');
-    toolbarEl.id = 'velorecord-toolbar-container';
-    toolbarEl.className = 'velorecord-toolbar';
+    toolbarEl.id = 'viewdrop-toolbar-container';
+    toolbarEl.className = 'viewdrop-toolbar';
 
     toolbarEl.innerHTML = `
-      <button class="velo-btn velo-btn-stop" id="velo-btn-stop" title="Stop and Save" style="width: 44px; height: 44px; border-radius: 16px; background: #ff4d4f;">
+      <button class="view-btn view-btn-stop" id="view-btn-stop" title="Stop and Save" style="width: 44px; height: 44px; border-radius: 16px; background: #ff4d4f;">
         <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
           <rect x="7" y="7" width="10" height="10" rx="2"></rect>
         </svg>
       </button>
 
-      <div class="velo-timer" id="velo-timer-text" style="font-size: 14px; font-weight: 700; color: #60a5fa;">0:00</div>
+      <div class="view-timer" id="view-timer-text" style="font-size: 14px; font-weight: 700; color: #60a5fa;">0:00</div>
       
-      <button class="velo-btn" id="velo-btn-pause" title="Pause Recording" style="width: 36px; height: 36px; border-radius: 50%; background: transparent; border: 2px solid #52525b;">
+      <button class="view-btn" id="view-btn-pause" title="Pause Recording" style="width: 36px; height: 36px; border-radius: 50%; background: transparent; border: 2px solid #52525b;">
         <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
           <rect x="7" y="6" width="3" height="12" rx="1.5"></rect>
           <rect x="14" y="6" width="3" height="12" rx="1.5"></rect>
         </svg>
       </button>
 
-      <button class="velo-btn" id="velo-btn-bookmark" title="Bookmark current moment" style="margin-top: 4px;">
+      <button class="view-btn" id="view-btn-bookmark" title="Bookmark current moment" style="margin-top: 4px;">
         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path>
           <line x1="4" y1="22" x2="4" y2="15"></line>
         </svg>
       </button>
 
-      <button class="velo-btn" id="velo-btn-draw" title="Draw on Screen">
+      <button class="view-btn" id="view-btn-draw" title="Draw on Screen">
         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M12 20h9"></path>
           <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
         </svg>
       </button>
 
-      <div class="velo-draw-options" id="velo-draw-options" style="display: none;">
-        <div class="velo-color-dot velo-color-red active" data-color="#ff2e93"></div>
-        <div class="velo-color-dot velo-color-yellow" data-color="#fbbf24"></div>
-        <div class="velo-color-dot velo-color-blue" data-color="#00f2fe"></div>
-        <div class="velo-color-dot velo-color-green" data-color="#10b981"></div>
-        <button class="velo-btn" id="velo-btn-clear-draw" style="width: 24px; height: 24px; margin-top: 4px;" title="Clear Annotations">
+      <div class="view-draw-options" id="view-draw-options" style="display: none;">
+        <div class="view-color-dot view-color-red active" data-color="#ff2e93"></div>
+        <div class="view-color-dot view-color-yellow" data-color="#fbbf24"></div>
+        <div class="view-color-dot view-color-blue" data-color="#00f2fe"></div>
+        <div class="view-color-dot view-color-green" data-color="#10b981"></div>
+        <button class="view-btn" id="view-btn-clear-draw" style="width: 24px; height: 24px; margin-top: 4px;" title="Clear Annotations">
           <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2">
             <polyline points="3 6 5 6 21 6"></polyline>
             <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
@@ -146,13 +146,13 @@
     document.body.appendChild(toolbarEl);
 
     // Event Listeners for Toolbar Actions
-    const pauseBtn = document.getElementById('velo-btn-pause');
-    const stopBtn = document.getElementById('velo-btn-stop');
-    const drawBtn = document.getElementById('velo-btn-draw');
-    const bookmarkBtn = document.getElementById('velo-btn-bookmark');
-    const drawOptions = document.getElementById('velo-draw-options');
-    const clearDrawBtn = document.getElementById('velo-btn-clear-draw');
-    const statusDot = document.getElementById('velo-status-dot');
+    const pauseBtn = document.getElementById('view-btn-pause');
+    const stopBtn = document.getElementById('view-btn-stop');
+    const drawBtn = document.getElementById('view-btn-draw');
+    const bookmarkBtn = document.getElementById('view-btn-bookmark');
+    const drawOptions = document.getElementById('view-draw-options');
+    const clearDrawBtn = document.getElementById('view-btn-clear-draw');
+    const statusDot = document.getElementById('view-status-dot');
 
     pauseBtn.addEventListener('click', () => {
       isPaused = !isPaused;
@@ -194,7 +194,7 @@
     });
 
     // Draw Colors
-    const colorDots = document.querySelectorAll('.velo-color-dot');
+    const colorDots = document.querySelectorAll('.view-color-dot');
     colorDots.forEach(dot => {
       dot.addEventListener('click', () => {
         colorDots.forEach(d => d.classList.remove('active'));
@@ -222,7 +222,7 @@
 
   // --- DRAGGABLE CAMERA BUBBLE ---
   async function createCameraBubble() {
-    if (document.getElementById('velorecord-cam-container')) return;
+    if (document.getElementById('viewdrop-cam-container')) return;
 
     try {
       cameraStream = await navigator.mediaDevices.getUserMedia({
@@ -231,8 +231,8 @@
       });
 
       camBubbleEl = document.createElement('div');
-      camBubbleEl.id = 'velorecord-cam-container';
-      camBubbleEl.className = 'velorecord-cam-bubble';
+      camBubbleEl.id = 'viewdrop-cam-container';
+      camBubbleEl.className = 'viewdrop-cam-bubble';
 
       const video = document.createElement('video');
       video.autoplay = true;
@@ -299,11 +299,11 @@
 
   // --- DRAWING CANVAS ---
   function createDrawingCanvas() {
-    if (document.getElementById('velorecord-drawing-canvas-el')) return;
+    if (document.getElementById('viewdrop-drawing-canvas-el')) return;
 
     canvasEl = document.createElement('canvas');
-    canvasEl.id = 'velorecord-drawing-canvas-el';
-    canvasEl.className = 'velorecord-drawing-canvas';
+    canvasEl.id = 'viewdrop-drawing-canvas-el';
+    canvasEl.className = 'viewdrop-drawing-canvas';
 
     // Set canvas dimensions
     canvasEl.width = window.innerWidth;
@@ -370,7 +370,7 @@
   function handleGlobalClickForSpotlight(e) {
     if (!isRecording || !spotlightEnabled || isDrawingMode) return;
     if (e.target.closest && e.target.closest(
-      '.velorecord-toolbar, .velorecord-cam-bubble, .velo-toast, .velorecord-drawing-canvas'
+      '.viewdrop-toolbar, .viewdrop-cam-bubble, .view-toast, .viewdrop-drawing-canvas'
     )) {
       return;
     }
@@ -379,7 +379,7 @@
 
   function spawnClickSpotlight(x, y) {
     const spotlight = document.createElement('div');
-    spotlight.className = 'velorecord-click-spotlight';
+    spotlight.className = 'viewdrop-click-spotlight';
     spotlight.style.left = `${x}px`;
     spotlight.style.top = `${y}px`;
     document.body.appendChild(spotlight);
@@ -390,14 +390,14 @@
   }
 
   function showBookmarkToast(secs) {
-    const existingToast = document.getElementById('velo-bookmark-toast');
+    const existingToast = document.getElementById('view-bookmark-toast');
     if (existingToast) {
       existingToast.remove();
     }
 
     const toast = document.createElement('div');
-    toast.id = 'velo-bookmark-toast';
-    toast.className = 'velo-toast';
+    toast.id = 'view-bookmark-toast';
+    toast.className = 'view-toast';
 
     const mins = Math.floor(secs / 60);
     const s = secs % 60;

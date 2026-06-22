@@ -1,4 +1,4 @@
-// VeloRecord Capture Engine
+// ViewDrop Capture Engine
 
 let mediaRecorder = null;
 let recordedChunks = [];
@@ -19,7 +19,7 @@ let transcriptEntries = [];
 let transcriptionActive = false;
 
 // IndexedDB Helper
-const DB_NAME = 'VeloRecordDB';
+const DB_NAME = 'ViewDropDB';
 const STORE_NAME = 'videos';
 
 function saveVideoToIndexedDB(id, blob) {

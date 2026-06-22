@@ -1,6 +1,6 @@
-// VeloRecord Studio Controller
+// ViewDrop Studio Controller
 
-const DB_NAME = 'VeloRecordDB';
+const DB_NAME = 'ViewDropDB';
 const STORE_NAME = 'videos';
 let currentRecordingId = null;
 let currentRecordingBlob = null;

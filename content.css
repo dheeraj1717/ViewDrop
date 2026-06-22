@@ -1,7 +1,7 @@
-/* VeloRecord Injected Overlays CSS (Enterprise Styling) */
+/* ViewDrop Injected Overlays CSS (Enterprise Styling) */
 
 /* Camera Bubble */
-.velorecord-cam-bubble {
+.viewdrop-cam-bubble {
   position: fixed;
   bottom: 30px;
   left: 30px;
@@ -20,13 +20,13 @@
   user-select: none;
 }
 
-.velorecord-cam-bubble:active {
+.viewdrop-cam-bubble:active {
   cursor: grabbing;
   border-color: #8b5cf6;
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
 }
 
-.velorecord-cam-bubble video {
+.viewdrop-cam-bubble video {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -34,7 +34,7 @@
 }
 
 /* Floating Toolbar */
-.velorecord-toolbar {
+.viewdrop-toolbar {
   position: fixed;
   bottom: 30px;
   left: 30px;
@@ -52,45 +52,45 @@
   font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
   color: #f4f4f5;
   user-select: none;
-  animation: velo-slide-up 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: view-slide-up 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   transition: transform 0.2s ease;
 }
 
-@keyframes velo-slide-up {
+@keyframes view-slide-up {
   from { transform: translateY(40px); opacity: 0; }
   to { transform: translateY(0); opacity: 1; }
 }
 
 /* Recording Status Indicator */
-.velo-status-group {
+.view-status-group {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 8px;
 }
 
-.velo-pulse-dot {
+.view-pulse-dot {
   width: 8px;
   height: 8px;
   background-color: #ef4444; /* Standard red for recording status */
   border-radius: 50%;
   box-shadow: 0 0 6px #ef4444;
-  animation: velo-pulse 1.5s infinite;
+  animation: view-pulse 1.5s infinite;
 }
 
-@keyframes velo-pulse {
+@keyframes view-pulse {
   0% { transform: scale(0.95); opacity: 1; box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.5); }
   70% { transform: scale(1.05); opacity: 0.8; box-shadow: 0 0 0 6px rgba(239, 68, 68, 0); }
   100% { transform: scale(0.95); opacity: 1; box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
 }
 
-.velo-pulse-dot.paused {
+.view-pulse-dot.paused {
   background-color: #f59e0b;
   box-shadow: 0 0 6px #f59e0b;
   animation: none;
 }
 
-.velo-timer {
+.view-timer {
   font-size: 13px;
   font-weight: 500;
   font-variant-numeric: tabular-nums;
@@ -98,7 +98,7 @@
 }
 
 /* Toolbar Buttons */
-.velo-btn {
+.view-btn {
   background: transparent;
   border: 1px solid transparent;
   width: 32px;
@@ -112,31 +112,31 @@
   transition: all 0.15s ease;
 }
 
-.velo-btn:hover {
+.view-btn:hover {
   background: rgba(255, 255, 255, 0.04);
   border-color: #27272a;
   color: #f4f4f5;
 }
 
-.velo-btn.active {
+.view-btn.active {
   background: var(--toggle-on, #6366f1);
   border-color: var(--toggle-on, #6366f1);
   color: white;
 }
 
-.velo-btn-stop {
+.view-btn-stop {
   background: #ef4444;
   color: white;
   border: none;
 }
 
-.velo-btn-stop:hover {
+.view-btn-stop:hover {
   background: #dc2626;
   color: white;
 }
 
 /* Drawing Canvas Container */
-.velorecord-drawing-canvas {
+.viewdrop-drawing-canvas {
   position: fixed;
   top: 0;
   left: 0;
@@ -148,22 +148,22 @@
 }
 
 /* Drawing Options Panel inside Toolbar */
-.velo-draw-options {
+.view-draw-options {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 8px;
   padding-top: 8px;
   border-top: 1px solid #27272a;
-  animation: velo-slide-in-right 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: view-slide-in-right 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@keyframes velo-slide-in-right {
+@keyframes view-slide-in-right {
   from { transform: translateX(10px); opacity: 0; }
   to { transform: translateX(0); opacity: 1; }
 }
 
-.velo-color-dot {
+.view-color-dot {
   width: 14px;
   height: 14px;
   border-radius: 50%;
@@ -172,22 +172,22 @@
   transition: transform 0.1s ease;
 }
 
-.velo-color-dot:hover {
+.view-color-dot:hover {
   transform: scale(1.15);
 }
 
-.velo-color-dot.active {
+.view-color-dot.active {
   border-color: #ffffff;
   box-shadow: 0 0 4px rgba(255,255,255,0.6);
 }
 
-.velo-color-red { background-color: #ef4444; }
-.velo-color-yellow { background-color: #eab308; }
-.velo-color-blue { background-color: #6366f1; }
-.velo-color-green { background-color: #10b981; }
+.view-color-red { background-color: #ef4444; }
+.view-color-yellow { background-color: #eab308; }
+.view-color-blue { background-color: #6366f1; }
+.view-color-green { background-color: #10b981; }
 
 /* Toast Notifications */
-.velo-toast {
+.view-toast {
   position: fixed;
   bottom: 90px; /* Positioned right above the floating toolbar */
   right: 30px;
@@ -203,18 +203,18 @@
   align-items: center;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3), 0 0 10px rgba(99, 102, 241, 0.2);
   z-index: 1000000;
-  animation: velo-slide-up 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: view-slide-up 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   transition: opacity 0.3s ease, transform 0.3s ease;
   pointer-events: none;
 }
 
-.velo-toast.fade-out {
+.view-toast.fade-out {
   opacity: 0;
   transform: translateY(-10px);
 }
 
 /* Cursor Click Spotlight */
-.velorecord-click-spotlight {
+.viewdrop-click-spotlight {
   position: fixed;
   width: 40px;
   height: 40px;
@@ -225,10 +225,10 @@
   z-index: 999996;
   background: radial-gradient(circle, rgba(99, 102, 241, 0.55) 0%, rgba(99, 102, 241, 0.25) 40%, rgba(99, 102, 241, 0) 70%);
   border: 2px solid rgba(99, 102, 241, 0.85);
-  animation: velo-spotlight-pulse 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: view-spotlight-pulse 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-@keyframes velo-spotlight-pulse {
+@keyframes view-spotlight-pulse {
   0% {
     transform: scale(0.3);
     opacity: 0.9;

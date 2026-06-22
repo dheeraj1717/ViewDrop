@@ -1,4 +1,4 @@
-// VeloRecord Pro Service Worker
+// ViewDrop Pro Service Worker
 
 let activeRecordingTabId = null;
 let originalTargetTabId = null;
