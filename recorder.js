@@ -73,7 +73,8 @@ function startTranscription() {
     };
 
     recognizer.onerror = (e) => {
-      console.warn('Transcription error:', e.error);
+      // Suppress network/mic errors from flooding the console
+      // console.warn('Transcription error:', e.error);
     };
 
     // Chrome's recognizer stops itself periodically (silence/network) -
@@ -109,6 +110,9 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   document.getElementById('manual-btn').addEventListener('click', startCaptureFlow);
+  document.getElementById('pause-btn').addEventListener('click', pauseRecording);
+  document.getElementById('resume-btn').addEventListener('click', resumeRecording);
+  document.getElementById('stop-btn').addEventListener('click', stopAndSaveRecording);
 });
 
 async function startCaptureFlow() {
@@ -230,6 +234,7 @@ async function startCaptureFlow() {
 
       statusTitle.textContent = 'Saving Recording...';
       statusDesc.textContent = 'Writing high-quality video data to local database.';
+      document.getElementById('controls-bar').style.display = 'none';
 
       const rawBlob = new Blob(recordedChunks, { type: mimeType });
       
@@ -309,6 +314,7 @@ async function startCaptureFlow() {
 
     statusTitle.textContent = 'Recording Screen';
     statusDesc.textContent = 'Recording is active. Do not close this tab.';
+    document.getElementById('controls-bar').style.display = 'flex';
 
     // Send message to background that recording started successfully
     chrome.runtime.sendMessage({ action: 'recording_started' });
@@ -321,9 +327,8 @@ async function startCaptureFlow() {
   }
 }
 
-// Listen for control actions
-chrome.runtime.onMessage.addListener((message) => {
-  if (message.action === 'pause_recording' && mediaRecorder && mediaRecorder.state === 'recording') {
+function pauseRecording() {
+  if (mediaRecorder && mediaRecorder.state === 'recording') {
     mediaRecorder.pause();
     pauseStartTime = Date.now();
     const elapsedMs = (Date.now() - startTime) - totalPausedTime;
@@ -332,8 +337,15 @@ chrome.runtime.onMessage.addListener((message) => {
       time: elapsedSecs,
       note: 'Recording Paused'
     });
+    document.getElementById('pause-btn').style.display = 'none';
+    document.getElementById('resume-btn').style.display = 'inline-block';
+    document.getElementById('status-title').textContent = 'Recording Paused';
+    document.getElementById('status-desc').textContent = 'Recording is currently paused.';
   }
-  if (message.action === 'resume_recording' && mediaRecorder && mediaRecorder.state === 'paused') {
+}
+
+function resumeRecording() {
+  if (mediaRecorder && mediaRecorder.state === 'paused') {
     mediaRecorder.resume();
     if (pauseStartTime) {
       totalPausedTime += (Date.now() - pauseStartTime);
@@ -344,14 +356,32 @@ chrome.runtime.onMessage.addListener((message) => {
       time: elapsedSecs,
       note: 'Recording Resumed'
     });
+    document.getElementById('resume-btn').style.display = 'none';
+    document.getElementById('pause-btn').style.display = 'inline-block';
+    document.getElementById('status-title').textContent = 'Recording Screen';
+    document.getElementById('status-desc').textContent = 'Recording is active. Do not close this tab.';
+  }
+}
+
+function addBookmark() {
+  const elapsedMs = (Date.now() - startTime) - totalPausedTime;
+  const elapsedSecs = Math.max(0, Math.floor(elapsedMs / 1000));
+  bookmarks.push({
+    time: elapsedSecs,
+    note: `Bookmark ${bookmarks.filter(b => b.note.startsWith('Bookmark')).length + 1}`
+  });
+}
+
+// Listen for control actions
+chrome.runtime.onMessage.addListener((message) => {
+  if (message.action === 'pause_recording') {
+    pauseRecording();
+  }
+  if (message.action === 'resume_recording') {
+    resumeRecording();
   }
   if (message.action === 'add_bookmark') {
-    const elapsedMs = (Date.now() - startTime) - totalPausedTime;
-    const elapsedSecs = Math.max(0, Math.floor(elapsedMs / 1000));
-    bookmarks.push({
-      time: elapsedSecs,
-      note: `Bookmark ${bookmarks.filter(b => b.note.startsWith('Bookmark')).length + 1}`
-    });
+    addBookmark();
   }
   if (message.action === 'stop_recording') {
     stopAndSaveRecording();

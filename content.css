@@ -37,17 +37,18 @@
 .velorecord-toolbar {
   position: fixed;
   bottom: 30px;
-  right: 30px;
-  background: rgba(9, 9, 11, 0.85);
-  border: 1px solid #27272a;
+  left: 30px;
+  background: #1c1c1e;
+  border: 1px solid rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(16px);
-  padding: 8px 16px;
-  border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  padding: 12px 8px;
+  border-radius: 40px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
   z-index: 999999;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
   font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
   color: #f4f4f5;
   user-select: none;
@@ -63,10 +64,9 @@
 /* Recording Status Indicator */
 .velo-status-group {
   display: flex;
+  flex-direction: column;
   align-items: center;
   gap: 8px;
-  padding-right: 10px;
-  border-right: 1px solid #27272a;
 }
 
 .velo-pulse-dot {
@@ -150,10 +150,11 @@
 /* Drawing Options Panel inside Toolbar */
 .velo-draw-options {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 6px;
-  padding-left: 8px;
-  border-left: 1px solid #27272a;
+  gap: 8px;
+  padding-top: 8px;
+  border-top: 1px solid #27272a;
   animation: velo-slide-in-right 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 

@@ -72,6 +72,32 @@
       transform: translateY(-2px);
       box-shadow: 0 6px 20px rgba(255, 46, 147, 0.4);
     }
+    .controls {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 24px;
+    }
+    .ctrl-btn {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 10px 20px;
+      font-size: 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .ctrl-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+    .ctrl-btn.stop {
+      background: rgba(255, 46, 147, 0.2);
+      border-color: rgba(255, 46, 147, 0.5);
+    }
+    .ctrl-btn.stop:hover {
+      background: rgba(255, 46, 147, 0.4);
+    }
   </style>
 </head>
 <body>
@@ -80,6 +106,11 @@
     <h1 id="status-title">Initializing Stream Capture</h1>
     <p id="status-desc">Please choose the screen, window, or tab you want to record when the Chrome selector pops up.</p>
     <button id="manual-btn" class="btn" style="display: none;">Select Screen</button>
+    <div id="controls-bar" class="controls" style="display: none;">
+      <button id="pause-btn" class="ctrl-btn">Pause</button>
+      <button id="resume-btn" class="ctrl-btn" style="display: none;">Resume</button>
+      <button id="stop-btn" class="ctrl-btn stop">Stop</button>
+    </div>
   </div>
   <script src="webm-duration-fix.js"></script>
   <script src="recorder.js"></script>

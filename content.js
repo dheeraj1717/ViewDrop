@@ -35,11 +35,27 @@
     if (message.action === 'cleanup_overlays') {
       cleanup();
     }
+    if (message.action === 'pause_toolbar_ui') {
+      isPaused = true;
+      const pauseBtn = document.getElementById('velo-btn-pause');
+      if (pauseBtn) {
+        pauseBtn.innerHTML = `
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+            <polygon points="8,5 19,12 8,19"></polygon>
+          </svg>
+        `;
+        pauseBtn.title = 'Resume Recording';
+      }
+    }
   });
 
   function initOverlays(options) {
     isRecording = true;
-    secondsElapsed = 0;
+    if (options.startTime) {
+      secondsElapsed = Math.floor((Date.now() - options.startTime) / 1000);
+    } else {
+      secondsElapsed = 0;
+    }
     
     // 1. Create Transparent drawing canvas overlay
     createDrawingCanvas();
@@ -84,27 +100,30 @@
     toolbarEl.className = 'velorecord-toolbar';
 
     toolbarEl.innerHTML = `
-      <div class="velo-status-group">
-        <div class="velo-pulse-dot" id="velo-status-dot"></div>
-        <div class="velo-timer" id="velo-timer-text">0:00</div>
-      </div>
-      
-      <button class="velo-btn" id="velo-btn-pause" title="Pause Recording">
-        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-          <rect x="6" y="4" width="4" height="16" rx="1"></rect>
-          <rect x="14" y="4" width="4" height="16" rx="1"></rect>
+      <button class="velo-btn velo-btn-stop" id="velo-btn-stop" title="Stop and Save" style="width: 44px; height: 44px; border-radius: 16px; background: #ff4d4f;">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+          <rect x="7" y="7" width="10" height="10" rx="2"></rect>
         </svg>
       </button>
 
-      <button class="velo-btn" id="velo-btn-bookmark" title="Bookmark current moment">
-        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <div class="velo-timer" id="velo-timer-text" style="font-size: 14px; font-weight: 700; color: #60a5fa;">0:00</div>
+      
+      <button class="velo-btn" id="velo-btn-pause" title="Pause Recording" style="width: 36px; height: 36px; border-radius: 50%; background: transparent; border: 2px solid #52525b;">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+          <rect x="7" y="6" width="3" height="12" rx="1.5"></rect>
+          <rect x="14" y="6" width="3" height="12" rx="1.5"></rect>
+        </svg>
+      </button>
+
+      <button class="velo-btn" id="velo-btn-bookmark" title="Bookmark current moment" style="margin-top: 4px;">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path>
           <line x1="4" y1="22" x2="4" y2="15"></line>
         </svg>
       </button>
 
       <button class="velo-btn" id="velo-btn-draw" title="Draw on Screen">
-        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M12 20h9"></path>
           <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
         </svg>
@@ -115,19 +134,13 @@
         <div class="velo-color-dot velo-color-yellow" data-color="#fbbf24"></div>
         <div class="velo-color-dot velo-color-blue" data-color="#00f2fe"></div>
         <div class="velo-color-dot velo-color-green" data-color="#10b981"></div>
-        <button class="velo-btn" id="velo-btn-clear-draw" style="width: 24px; height: 24px; margin-left: 6px;" title="Clear Annotations">
+        <button class="velo-btn" id="velo-btn-clear-draw" style="width: 24px; height: 24px; margin-top: 4px;" title="Clear Annotations">
           <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2">
             <polyline points="3 6 5 6 21 6"></polyline>
             <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
           </svg>
         </button>
       </div>
-
-      <button class="velo-btn velo-btn-stop" id="velo-btn-stop" title="Stop and Save">
-        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-          <rect x="4" y="4" width="16" height="16" rx="2"></rect>
-        </svg>
-      </button>
     `;
 
     document.body.appendChild(toolbarEl);
@@ -147,21 +160,19 @@
         chrome.runtime.sendMessage({ action: 'pause_recording' });
         pauseBtn.innerHTML = `
           <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-            <polygon points="5,3 19,12 5,21"></polygon>
+            <polygon points="8,5 19,12 8,19"></polygon>
           </svg>
         `;
         pauseBtn.title = 'Resume Recording';
-        statusDot.classList.add('paused');
       } else {
         chrome.runtime.sendMessage({ action: 'resume_recording' });
         pauseBtn.innerHTML = `
           <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-            <rect x="6" y="4" width="4" height="16" rx="1"></rect>
-            <rect x="14" y="4" width="4" height="16" rx="1"></rect>
+            <rect x="7" y="6" width="3" height="12" rx="1.5"></rect>
+            <rect x="14" y="6" width="3" height="12" rx="1.5"></rect>
           </svg>
         `;
         pauseBtn.title = 'Pause Recording';
-        statusDot.classList.remove('paused');
       }
     });
 

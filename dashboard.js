@@ -38,8 +38,12 @@ document.addEventListener('DOMContentLoaded', () => {
   setupTimelineEvents();
 
   // Tabs & Transcript search
-  document.getElementById('tab-summary-btn').addEventListener('click', () => switchTab('summary'));
-  document.getElementById('tab-transcript-btn').addEventListener('click', () => switchTab('transcript'));
+  const summaryBtn = document.getElementById('tab-summary-btn');
+  if (summaryBtn) summaryBtn.addEventListener('click', () => switchTab('summary'));
+  
+  const transcriptBtn = document.getElementById('tab-transcript-btn');
+  if (transcriptBtn) transcriptBtn.addEventListener('click', () => switchTab('transcript'));
+  
   document.getElementById('transcript-search').addEventListener('input', handleTranscriptSearch);
 });
 
